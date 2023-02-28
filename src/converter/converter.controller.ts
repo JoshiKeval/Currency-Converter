@@ -16,6 +16,7 @@ export class ConverterController {
   }
 
   @Get("/getCountryCode")
+  @UseGuards(AuthGuard("jwt"))
   async getCountry(){
    let result=await this.converterService.getCountry();
    return result;

@@ -58,8 +58,6 @@ export class AuthService {
     if (!checkUser) {
       throw new HttpException("User Not Found", HttpStatus.FORBIDDEN);
     }
-
-    console.log(checkUser.user_id);
     const areEqual = await bcrypt.compare(password, checkUser.password);
     try {
       if (areEqual == true) {

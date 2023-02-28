@@ -1,6 +1,7 @@
 import { DataSource } from "typeorm";
 import { AddUserTable } from "./entity/addUser.entity";
 import { countryCodes } from "./entity/countryCode.entity";
+import { ReqLoggerTable } from "./entity/reqLogger.entity";
 
 export const databaseProvider = [
   {
@@ -13,7 +14,7 @@ export const databaseProvider = [
         username: String(process.env.DB_USERNAME),
         password:String(process.env.DB_PASS),
         database: String(process.env.DB_NAME),
-        entities: [AddUserTable,countryCodes],
+        entities: [AddUserTable,countryCodes,ReqLoggerTable],
         synchronize: true,
         logging: true,
       });
