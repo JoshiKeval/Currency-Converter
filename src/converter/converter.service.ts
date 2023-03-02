@@ -3,8 +3,11 @@ import { HttpException, HttpStatus, Inject, Injectable } from "@nestjs/common";
 import axios from "axios";
 import { GetDataDto } from "src/db/dto/request/getdata.dto";
 import { CurrencyDto } from "src/db/dto/response/currency.res.dto";
-import { DataSource } from "typeorm";
 import { countryCodes } from "src/db/entity/countryCode.entity";
+// import { GetDataDto } from "../../src/db/dto/request/getdata.dto";
+// import { CurrencyDto } from "../../src/db/dto/response/currency.res.dto";
+import { DataSource } from "typeorm";
+// import { countryCodes } from "../../src/db/entity/countryCode.entity";
 @Injectable()
 export class ConverterService {
   constructor(@Inject("DATA_SOURCE") private dataSource: DataSource) {}

@@ -2,8 +2,10 @@ import { Controller, UseGuards } from "@nestjs/common";
 import { Body, Get, Param, Post } from "@nestjs/common/decorators";
 import { AuthGuard } from "@nestjs/passport";
 import { ApiTags } from "@nestjs/swagger";
-import { GetDataDto } from "./dto/getdata.dto";
-import { CurrencyDto } from "./dto/currency.res.dto";
+// import { GetDataDto } from "src/db/dto/request/getdata.dto";
+// import { CurrencyDto } from "src/db/dto/response/currency.res.dto";
+import { GetDataDto } from "src/db/dto/request/getdata.dto";
+import { CurrencyDto } from "src/db/dto/response/currency.res.dto";
 import { ConverterService } from "./converter.service";
 
 @ApiTags("Converter")
