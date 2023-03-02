@@ -1,10 +1,8 @@
 import { HttpService } from "@nestjs/axios";
 import { HttpException, HttpStatus, Inject, Injectable } from "@nestjs/common";
 import axios from "axios";
-
 import { GetDataDto } from "src/db/dto/request/getdata.dto";
 import { CurrencyDto } from "src/db/dto/response/currency.res.dto";
-import { readFileSync } from "fs";
 import { DataSource } from "typeorm";
 import { countryCodes } from "src/db/entity/countryCode.entity";
 @Injectable()
@@ -35,11 +33,14 @@ export class ConverterService {
       );
       return data;
     } catch (error) {
-      throw new HttpException('Please Enter Valid Country Code',HttpStatus.BAD_REQUEST)
+      throw new HttpException(
+        "Please Enter Valid Country Code",
+        HttpStatus.BAD_REQUEST
+      );
     }
   }
-  async getCountry(){
-    return await this.dataSource.getRepository(countryCodes).find()
+  async getCountry() {
+    return await this.dataSource.getRepository(countryCodes).find();
   }
 
   // async insertJson() {

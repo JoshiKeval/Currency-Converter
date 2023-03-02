@@ -1,10 +1,13 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { PrimaryColumn } from "typeorm/decorator/columns/PrimaryColumn";
+import { ReqLoggerTable } from "./reqLogger.entity";
 
 @Entity()
 export class AddUserTable {
-
+@PrimaryColumn()
 @PrimaryGeneratedColumn()
-user_id:string;  
+@OneToMany(()=>ReqLoggerTable,(k)=>k.req_id)
+user_id:number;  
 
 @Column()
 name:string;
