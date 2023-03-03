@@ -13,6 +13,8 @@ import { DataSource, Repository } from "typeorm";
 import * as bcrypt from "bcrypt";
 import { AddUserResDto } from "src/db/dto/response/addUser.res.dto";
 import { LoginResDto } from "src/db/dto/response/login.res.dto";
+import { BadRequestException } from "@nestjs/common";
+import { ForbiddenException } from "@nestjs/common";
 
 @Injectable()
 export class AuthService {
@@ -39,15 +41,16 @@ export class AuthService {
       email,
       password: hashPass,
     });
+
     try {
-      const checkEmail = await this.AddUserRepo.findOne({ where: { email } });
-      if (checkEmail) {
-        throw new ConflictException("User already exist");
-      }
       await this.AddUserRepo.save(AddData);
       let res = new AddUserResDto("Register SucssesFully...");
       return res;
-    } catch (error) {}
+    } catch (error) {
+      if (error.code == 23505)
+        throw new ConflictException("User already exists");
+      else throw new BadRequestException(error.message);
+    }
   }
 
   ///////////////////////////////////////////////////////////////////////////////////////Login
@@ -60,23 +63,16 @@ export class AuthService {
     }
     const areEqual = await bcrypt.compare(password, checkUser.password);
     try {
-      if (areEqual == true) {
+      if (areEqual) {
         const { user_id } = checkUser;
         const token = this.generateToken({ user_id });
         let msg = new LoginResDto("Login Succesfully...", token);
         return msg;
+      }else{
+        throw new ForbiddenException("Wrong Password...")
       }
     } catch (error) {
-      throw new HttpException(
-        {
-          status: HttpStatus.FORBIDDEN,
-          error: "Wrong Password",
-        },
-        HttpStatus.FORBIDDEN,
-        {
-          cause: error,
-        }
-      );
+        throw new BadRequestException(error.message);
     }
   }
 }

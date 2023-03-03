@@ -43,7 +43,9 @@ export class ConverterService {
     }
   }
   async getCountry() {
-    return await this.dataSource.getRepository(countryCodes).find();
+   let result=await this.dataSource.getRepository(countryCodes).find();
+   let names = result.map((item) => item.currency_code);
+   return names;
   }
 
   // async insertJson() {
